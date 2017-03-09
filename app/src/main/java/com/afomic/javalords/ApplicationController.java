@@ -1,6 +1,7 @@
 package com.afomic.javalords;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -9,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.Volley;
 
 /**
  * Created by afomic on 08-Mar-17.
@@ -40,7 +42,7 @@ public class ApplicationController extends Application{
             Network network = new BasicNetwork(new HurlStack());
 
             // Instantiate the RequestQueue with the cache and network.
-            mRequestQueue = new RequestQueue(cache, network);
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 
         }
 

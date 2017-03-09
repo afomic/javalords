@@ -8,7 +8,7 @@ package com.afomic.javalords.data;
 public class Constants {
     public static final String TAG="javalord";
     public static final String USERNAME="login";
-    public static final String PROFILE_URL="url";
+    public static final String PROFILE_URL="html_url";
     public static final String PROFILE_PICTURE_URL="avatar_url";
     public static final String API_URL="https://api.github.com/search/users?q=language:java+location:lagos";
 

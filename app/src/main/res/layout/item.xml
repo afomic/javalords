@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:background="@color/backgroundColor"
     android:layout_height="wrap_content">
     <RelativeLayout
@@ -11,6 +13,7 @@
             android:layout_centerInParent="true"
             android:src="@drawable/moyin"
             android:layout_width="40dp"
+            android:id="@+id/thumbnail"
             android:layout_height="40dp" />
         <ImageView
             android:layout_centerInParent="true"
@@ -28,10 +31,11 @@
             android:text="Moyeen"
             android:gravity="center_vertical"
             android:textSize="16sp"
+            android:id="@+id/developer_username"
             android:layout_weight="1"
             android:layout_height="0dp" />
-        <view
-            android:background="@android:color/darker_gray"
+        <View
+            android:background="#614a4646"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
 
