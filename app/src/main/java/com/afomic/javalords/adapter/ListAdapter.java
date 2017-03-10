@@ -58,6 +58,7 @@ public class ListAdapter extends BaseAdapter {
         holder.developerUsername.setText(item.getUsername());
         Glide.with(context).load(item.getProfileImageURL())
                 .thumbnail(0.5f)
+                .override(40,40)
                 .crossFade()
                 .placeholder(R.drawable.placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
