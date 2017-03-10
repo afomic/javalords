@@ -26,7 +26,9 @@ public class ListAdapter extends BaseAdapter {
         this.context=context;
         this.developers=developers;
     }
-
+    public void setArray(ArrayList<Developer> developers){
+        this.developers=developers;
+    }
     @Override
     public int getCount() {
         return developers.size();

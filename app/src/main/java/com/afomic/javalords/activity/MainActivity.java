@@ -2,14 +2,21 @@ package com.afomic.javalords.activity;
 
 import android.app.Application;
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 import com.afomic.javalords.ApplicationController;
@@ -17,6 +24,7 @@ import com.afomic.javalords.R;
 import com.afomic.javalords.adapter.ListAdapter;
 import com.afomic.javalords.data.Constants;
 import com.afomic.javalords.models.Developer;
+import com.afomic.javalords.util.SearchUtil;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -34,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Developer> developers;
     ListAdapter mAdapter;
     Button refresh;
+    SearchView developerSearch;
+    SearchUtil util;
+    MenuItem item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         emptyLayout=(RelativeLayout) findViewById(R.id.empty_layout);
         mainList.setEmptyView(emptyLayout);
         progressLayout=(RelativeLayout) findViewById(R.id.progress_layout);
+
 
         refresh=(Button) findViewById(R.id.refresh_button);
         if(refresh!=null){
@@ -69,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         developers=new ArrayList<>();
         mAdapter=new ListAdapter(MainActivity.this,developers);
         mainList.setAdapter(mAdapter);
-
         fetchData();
 
     }
@@ -88,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         Developer developer=new Developer(object);
                         developers.add(developer);
                     }
+                    util=SearchUtil.getInstance(developers);
                 }catch (JSONException e){
                     Log.e(Constants.TAG, "Json parsing error: " + e.getMessage());
                 }
@@ -103,4 +115,29 @@ public class MainActivity extends AppCompatActivity {
         });
         ApplicationController.getInstance().addToRequestQueue(req);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        item =menu.findItem(R.id.menu_con_search);
+        developerSearch=(SearchView) MenuItemCompat.getActionView(item);
+        developerSearch.setLayoutParams(new ActionBar.LayoutParams(Gravity.RIGHT));
+        developerSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(developers.size()==0) return true;
+                ArrayList<Developer> result=util.search(newText);
+                mAdapter.setArray(result);
+                mAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }

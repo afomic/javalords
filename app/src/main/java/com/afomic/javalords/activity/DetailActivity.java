@@ -64,7 +64,7 @@ public class DetailActivity extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_TEXT, msg);
                 intent.setType("text/plain");
                 if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(Intent.createChooser(intent,"Send Developer ..."));
+                    startActivity(Intent.createChooser(intent,"Share Developer ..."));
                 }
 
             }

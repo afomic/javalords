@@ -47,7 +47,7 @@
             android:layout_height="match_parent">
             <android.support.v7.widget.CardView
                 android:layout_margin="8dp"
-                app:cardElevation="4dp"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -70,7 +70,6 @@
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                  android:layout_marginLeft="8dp"
-                android:elevation="4dp"
                 android:layout_marginRight="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -80,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:src="@drawable/url_image"
+                        android:src="@drawable/url_link"
                         android:layout_width="24dp"
                         android:layout_height="24dp" />
                     <TextView
