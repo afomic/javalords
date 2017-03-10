@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 
 import com.afomic.javalords.ApplicationController;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ListView mainList;
-    private ProgressDialog pDialog;
+    RelativeLayout emptyLayout;
     ArrayList<Developer> developers;
     ListAdapter mAdapter;
 
@@ -42,13 +42,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mainList=(ListView) findViewById(R.id.main_list);
+        emptyLayout=(RelativeLayout) findViewById(R.id.empty_layout);
+        mainList.setEmptyView(emptyLayout);
         refresh=(Button) findViewById(R.id.refresh_button);
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fetchData();
-            }
-        });
+        if(refresh!=null){
+            refresh.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fetchData();
+                }
+            });
+        }
+
         mainList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -60,24 +65,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        pDialog = new ProgressDialog(this);
         developers=new ArrayList<>();
         mAdapter=new ListAdapter(MainActivity.this,developers);
         mainList.setAdapter(mAdapter);
-        View emptyView = LayoutInflater.from(this).inflate(R.layout.empty,null,false);
-        mainList.setEmptyView(emptyView);
+
         fetchData();
 
     }
 
     public void fetchData(){
-        pDialog.setMessage("Loading...");
-        pDialog.show();
         JsonObjectRequest req=new JsonObjectRequest(Request.Method.GET,Constants.API_URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                emptyLayout.setVisibility(View.GONE);
                 Log.d(Constants.TAG, response.toString());
-                pDialog.hide();
                 developers.clear();
                 try{
                     JSONArray array=response.getJSONArray("items");
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(Constants.TAG, "Error: " + error.getMessage());
-                pDialog.hide();
+                emptyLayout.setVisibility(View.VISIBLE);
             }
         });
         ApplicationController.getInstance().addToRequestQueue(req);
