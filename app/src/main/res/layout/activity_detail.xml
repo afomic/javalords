@@ -20,6 +20,12 @@
                 android:layout_width="match_parent"
                 android:scaleType="fitXY"
                 android:layout_height="match_parent" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                android:background="@drawable/scrim_top"
+                app:layout_collapseMode="pin"/>
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,7 +40,8 @@ public class DetailActivity extends AppCompatActivity {
         toolbar=(Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         profileCollasping=(CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-       getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         profileImage=(ImageView) findViewById(R.id.detail_image);
         username=(TextView) findViewById(R.id.detail_username);
@@ -91,5 +93,13 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(intent,"View Profile ..."));
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

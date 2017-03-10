@@ -1,7 +1,6 @@
 package com.afomic.javalords.activity;
 
 import android.app.Application;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,10 +30,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ListView mainList;
-    RelativeLayout emptyLayout;
+    RelativeLayout emptyLayout,progressLayout;
     ArrayList<Developer> developers;
     ListAdapter mAdapter;
-
     Button refresh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +42,15 @@ public class MainActivity extends AppCompatActivity {
         mainList=(ListView) findViewById(R.id.main_list);
         emptyLayout=(RelativeLayout) findViewById(R.id.empty_layout);
         mainList.setEmptyView(emptyLayout);
+        progressLayout=(RelativeLayout) findViewById(R.id.progress_layout);
+
         refresh=(Button) findViewById(R.id.refresh_button);
         if(refresh!=null){
             refresh.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     fetchData();
+                    progressLayout.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -77,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest req=new JsonObjectRequest(Request.Method.GET,Constants.API_URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                emptyLayout.setVisibility(View.GONE);
                 Log.d(Constants.TAG, response.toString());
                 developers.clear();
+                progressLayout.setVisibility(View.GONE);
                 try{
                     JSONArray array=response.getJSONArray("items");
                     for (int i = 0; i < array.length(); i++) {
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(Constants.TAG, "Error: " + error.getMessage());
-                emptyLayout.setVisibility(View.VISIBLE);
+                progressLayout.setVisibility(View.GONE);
             }
         });
         ApplicationController.getInstance().addToRequestQueue(req);
