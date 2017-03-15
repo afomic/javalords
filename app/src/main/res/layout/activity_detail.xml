@@ -41,15 +41,13 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <LinearLayout
-            android:orientation="vertical"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.v7.widget.CardView
-                android:layout_margin="8dp"
-
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
                 <LinearLayout
                     android:padding="16dp"
                     android:orientation="horizontal"
@@ -67,12 +65,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                <View
+                    android:layout_marginLeft="56dp"
+                    android:background="#614a4646"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
                 <LinearLayout
                     android:padding="16dp"
                     android:orientation="horizontal"
@@ -93,9 +90,10 @@
                         tools:textColorLink="#90caf9"
                         android:textColorLink="#90caf9" />
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
 
-        </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
 
     </android.support.v4.widget.NestedScrollView>
     <android.support.design.widget.FloatingActionButton
