@@ -1,4 +1,4 @@
-node('test') {
+pipeline {
   // Mark the code checkout 'stage'....
   stage 'Stage Checkout'
 
